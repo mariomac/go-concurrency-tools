@@ -7,11 +7,15 @@ import (
 )
 
 type AverageStringLength struct{
+	mutex sync.Mutex
 	count int
 	sum int
 }
 
 func (p *AverageStringLength) Account(sentence string) {
+	p.mutex.Lock()
+	defer p.mutex.Unlock()
+
 	p.count++
 	p.sum += len(sentence)
 }
@@ -24,19 +28,24 @@ func main() {
 	runtime.GOMAXPROCS(4)
 	const parallelTasks = 10
 
-	wg := sync.WaitGroup{}
-	wg.Add(parallelTasks)
+	for {
+		wg := sync.WaitGroup{}
+		wg.Add(parallelTasks)
 
-	p := AverageStringLength{}
+		p := AverageStringLength{}
 
-	for i := 0 ; i < parallelTasks ; i++ {
-		go func() {
-			defer wg.Done()
-			p.Account("hello")
-		}()
+		for i := 0; i < parallelTasks; i++ {
+			go func() {
+				defer wg.Done()
+				p.Account("hello")
+			}()
+		}
+
+		wg.Wait()
+		if p.count != 10 || p.sum != 50 {
+			p.PrintStats()
+			panic("pum!")
+		}
 	}
-
-	wg.Wait()
-	p.PrintStats()
 
 }

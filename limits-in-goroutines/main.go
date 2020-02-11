@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	const stopAtMB = 324
+	const stopAtMB = 128
 	for {
 		wait := make(chan struct{})
 		memstats := runtime.MemStats{}
@@ -17,7 +17,7 @@ func main() {
 			mb := memstats.Sys/1_000_000
 			fmt.Println("active goroutines =", runtime.NumGoroutine(),
 				" (total memory:", mb , "MB)")
-			if mb >= stopAtMB {
+			if mb > stopAtMB {
 				os.Exit(0)
 			}
 			close(wait)

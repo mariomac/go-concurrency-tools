@@ -9,13 +9,12 @@ type Ball struct{}
 
 func main() {
 	runtime.GOMAXPROCS(4)
-	ch := make(chan Ball)
+	ch := make(chan Ball, 10)
 
 	b := Ball{}
-	go func() {
-		fmt.Printf("The pitcher throws %T\n", b)
-		ch <- b
-	}()
+
+	fmt.Printf("The pitcher throws %T\n", b)
+	ch <- b
 
 	rcv := <-ch
 	fmt.Printf("The catcher received %T\n", rcv)
