@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// Program to explore the limits in goroutines creation
 func main() {
 	const stopAtMB = 128
 	for {

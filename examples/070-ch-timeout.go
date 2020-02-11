@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"runtime"
 	"time"
@@ -28,7 +27,4 @@ func main() {
 	case <-time.After(5 * time.Second):
 		fmt.Println("timeout while waiting for a sweet")
 	}
-
-
-	ctx.Done()
 }

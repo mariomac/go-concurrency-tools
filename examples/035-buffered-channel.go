@@ -13,6 +13,7 @@ func main() {
 
 	b := Ball{}
 
+	// dummy example
 	fmt.Printf("The pitcher throws %T\n", b)
 	ch <- b
 

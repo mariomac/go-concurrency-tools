@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"runtime"
 	"sync"
 )
 
@@ -25,9 +24,10 @@ func (p *AverageStringLength) PrintStats() {
 }
 
 func main() {
-	runtime.GOMAXPROCS(4)
 	const parallelTasks = 10
 
+	// This program won't panic as long as we have used a mutex to perform accounting
+	// operations in an atomic way
 	for {
 		wg := sync.WaitGroup{}
 		wg.Add(parallelTasks)

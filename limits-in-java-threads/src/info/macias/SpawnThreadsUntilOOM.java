@@ -1,5 +1,7 @@
 package info.macias;
 
+// Sample program to explore the limits of Java Threads creation
+// CAUTION!! May hang your laptop
 public class SpawnThreadsUntilOOM {
     public static void main(String[] args) {
         Runtime runtime = Runtime.getRuntime();
